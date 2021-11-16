@@ -189,4 +189,182 @@ Different types of module formats:
 1. CommonJS(CJS) - `require` and `module.exports`
 2. ES Module(ESM) of ES6(ES2015) - `import` and `export`
 
+#### Built-in Modules
+
+<details>
+<summary>View contents</summary>
+
+1. **OS**
+
+The os module provides operating system-related utility methods and properties. It can be accessed using:
+
+```js
+const os = require("os");
+```
+
+`os.userInfo([options])`
+
+Returns information about the currently effective user.
+
+`os.uptime()`
+
+Returns the system uptime in seconds.
+
+`os.type()` - os name
+`os.release()` - os release
+`os.totalmem()` - os total memory
+`os.freemem()` - os free memory
+
+2. **PATH**
+
+The path module provides utilities for working with file and directory paths. It can be accessed using:
+
+```js
+const path = require("path");
+```
+
+`path.sep` - returns separator, e.g., '/'
+
+`path.basename(path[,ext])`
+
+The path.basename() method returns the last portion of a path, similar to the Unix basename command. Trailing directory separators are ignored.
+
+```js
+path.basename("/foo/bar/baz/asdf/quux.html");
+// Returns: 'quux.html'
+
+path.basename("/foo/bar/baz/asdf/quux.html", ".html");
+// Returns: 'quux'
+```
+
+`path.dirname(path)`
+
+The path.dirname() method returns the directory name of a path, similar to the Unix dirname command. Trailing directory separators are ignored.
+
+```js
+path.dirname("/foo/bar/baz/asdf/quux");
+// Returns: '/foo/bar/baz/asdf'
+```
+
+`path.extname(path)`
+
+The path.extname() method returns the extension of the path, from the last occurrence of the . (period) character to end of string in the last portion of the path. If there is no . in the last portion of the path, or if there are no . characters other than the first character of the basename of path, an empty string is returned.
+
+```js
+path.extname("index.html");
+// Returns: '.html'
+
+path.extname("index.coffee.md");
+// Returns: '.md'
+
+path.extname("index.");
+// Returns: '.'
+
+path.extname("index");
+// Returns: ''
+
+path.extname(".index");
+// Returns: ''
+
+path.extname(".index.md");
+// Returns: '.md'
+```
+
+`path.join([...paths])`
+
+The path.join() method joins all given path segments together using the platform-specific separator as a delimiter, then normalizes the resulting path.
+
+```js
+path.join("/foo", "bar", "baz/asdf", "quux", "..");
+// Returns: '/foo/bar/baz/asdf'
+
+path.join("foo", {}, "bar");
+// Throws 'TypeError: Path must be a string. Received {}'
+```
+
+`path.resolve([...paths])`
+
+The path.resolve() method resolves a sequence of paths or path segments into an absolute path.
+
+If no path segments are passed, path.resolve() will return the absolute path of the current working directory.
+
+```js
+path.resolve("/foo/bar", "./baz");
+// Returns: '/foo/bar/baz'
+
+path.resolve("/foo/bar", "/tmp/file/");
+// Returns: '/tmp/file'
+
+path.resolve("wwwroot", "static_files/png/", "../gif/image.gif");
+// If the current working directory is /home/myself/node,
+// this returns '/home/myself/node/wwwroot/static_files/gif/image.gif'
+
+path.resolve(__dirname, "content");
+// __dirname returns current directory
+```
+
+3. **FS** <sup>[ref](https://nodejs.org/api/fs.html)</sup>
+
+The fs module enables interacting with the file system in a way modeled on standard POSIX functions.
+
+To use the promise-based APIs:
+
+```js
+import * as fs from "fs/promises";
+// const fs = require('fs/promises')
+```
+
+To use the callback and sync APIs:
+
+```js
+import * as fs from "fs";
+// const fs = require('fs')
+```
+
+All file system operations have synchronous, callback, and promise-based forms, and are accessible using both CommonJS syntax and ES6 Modules (ESM).
+
+Promise example
+
+```js
+import { unlink } from "fs/promises";
+// const { unlink } = require('fs/promises')
+
+try {
+  await unlink("/tmp/hello");
+  console.log("successfully deleted /tmp/hello");
+} catch (error) {
+  console.error("there was an error:", error.message);
+}
+```
+
+Callback example
+
+```js
+import { unlink } from "fs";
+
+unlink("/tmp/hello", (err) => {
+  if (err) throw err;
+  console.log("successfully deleted /tmp/hello");
+});
+```
+
+Synchronous example
+
+The synchronous APIs block the Node.js event loop and further JavaScript execution until the operation is complete.
+
+```js
+import { unlinkSync } from "fs";
+
+try {
+  unlinkSync("/tmp/hello");
+  console.log("successfully deleted /tmp/hello");
+} catch (err) {
+  // handle the error
+}
+```
+
+4. **HTTP**
+
+</details>
+
 </details>
