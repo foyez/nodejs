@@ -1,6 +1,6 @@
 # Node.js
 
-- Runtime Environment for executing javascript outside of browser.
+- Runtime Environment for executing javascript outside of browser (Runtime environment gives your program ability to run, access to other resources such as OS, Networking)
 - Built on Chrome's V8 javascript Engine
 - In 2009, Ryan Dahl rewrite v8 engine using c++ called Node.exe
 - Node is not a programming language or a framework
