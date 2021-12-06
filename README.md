@@ -196,6 +196,9 @@ Different types of module formats:
 
 1. **OS**
 
+<details>
+<summary>View contents</summary>
+
 The os module provides operating system-related utility methods and properties. It can be accessed using:
 
 ```js
@@ -215,7 +218,12 @@ Returns the system uptime in seconds.
 `os.totalmem()` - os total memory
 `os.freemem()` - os free memory
 
+</details>
+
 2. **PATH**
+
+<details>
+<summary>View contents</summary>
 
 The path module provides utilities for working with file and directory paths. It can be accessed using:
 
@@ -303,7 +311,12 @@ path.resolve(__dirname, "content");
 // __dirname returns current directory
 ```
 
+</details>
+
 3. **FS** <sup>[ref](https://nodejs.org/api/fs.html)</sup>
+
+<details>
+<summary>View contents</summary>
 
 The fs module enables interacting with the file system in a way modeled on standard POSIX functions.
 
@@ -363,7 +376,39 @@ try {
 }
 ```
 
+</details>
+
 4. **HTTP**
+
+<details>
+<summary>View contents</summary>
+
+> allows Node.js to transfer data over the Hyper Text Transfer Protocol (HTTP)
+
+#### Create an HTTP server
+
+The HTTP module can create an HTTP server that listens to server ports and gives a response back to the client.
+
+`createServer()` method is used create an HTTP server:
+
+```js
+const http = require("http");
+
+// create a server object
+http
+  // req argument that represents the request from the client
+  .createServer((req, res) => {
+    res.writeHead(200, { "Content-Type": "applications/json" }); // the first argument is the status code, 200 means that all is OK, the second argument is an object containing the response headers
+    res.write("Hello World\n"); // write a response to the client
+    res.write(req.url); // "url" which holds the part of the url that comes after the domain name
+    res.end(); // end the response
+  })
+  .listen(5000); // the server object listens on prot 5000
+```
+
+The function passed into the http.createServer() method, will be executed when someone tries to access the computer on port 8080 (e.g. http://localhost:5000).
+
+</details>
 
 </details>
 
