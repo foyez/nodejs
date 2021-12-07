@@ -376,6 +376,168 @@ try {
 }
 ```
 
+#### Read files
+
+```js
+import { readFile } from "fs/promises";
+import path from "path";
+
+try {
+  const filePath = path.resolve(__dirname, "hello.txt");
+  const data = await readFile(filePath);
+  console.log(data);
+} catch (error) {
+  console.log("error message: ", error.message);
+}
+```
+
+```js
+const fs = require("fs");
+const path = require("path");
+
+const filePath = path.resolve(__dirname, "hello.txt");
+fs.readFile(filePath, "utf-8", (err, data) => {
+  if (err) {
+    console.log("error message: ", err.message);
+  }
+
+  console.log(data);
+});
+```
+
+#### Create files
+
+- `fs.appendFile()` - If the file does not exist, the file will be created (e.g. appendFile('message.txt', 'data to append', 'utf8', callback))
+
+```js
+const fs = require("fs");
+const path = require("path");
+
+const filePath = path.resolve(__dirname, "hello2.txt");
+const contents = "Nice to meet you!";
+fs.appendFile(filePath, contents, "utf-8", (err) => {
+  if (err) {
+    console.log("error message: ", err.message);
+  }
+
+  console.log("saved");
+});
+```
+
+- `fs.open()` - To create file, to write to a file or to read a file
+
+```
+fs.open(filename, flags, [mode], callback)
+```
+
+| flags | description                                                                |
+| ----- | -------------------------------------------------------------------------- |
+| r     | To open file to read and throws exception if file doesn’t exists.          |
+| r+    | Open file to read and write. Throws exception if file doesn’t exists.      |
+| rs+   | Open file in synchronous mode to read and write.                           |
+| w     | Open file for writing. File is created if it doesn’t exists.               |
+| wx    | It is same as ‘w’ but fails if path exists.                                |
+| w+    | Open file to read and write. File is created if it doesn’t exists.         |
+| wx+   | It is same as ‘w+’ but fails if path exists.                               |
+| a     | Open file to append. File is created if it doesn’t exists.                 |
+| ax    | It is same as ‘a’ but fails if path exists.                                |
+| a+    | Open file for reading and appending. File is created if it doesn’t exists. |
+| ax+   | It is same as ‘a+’ but fails if path exists.                               |
+
+```js
+const fs = require("fs");
+const path = require("path");
+
+const filePath = path.resolve(__dirname, "hello2.txt");
+fs.open(filePath, "w", (err, file) => {
+  if (err) throw err;
+
+  console.log(file);
+});
+```
+
+- `fs.writeFile()` - replaces the specified file and content if it exists. If the file does not exist, a new file, containing the specified content, will be created
+
+```js
+const fs = require("fs");
+const path = require("path");
+
+const filePath = path.resolve(__dirname, "hello2.txt");
+fs.writeFile(filePath, "Hello content!", (err) => {
+  if (err) throw err;
+
+  console.log("Saved!");
+});
+```
+
+#### Update files
+
+- `fs.appendFile()` - appends the specified content at the end of the specified file
+
+```js
+const fs = require("fs");
+const path = require("path");
+
+const filePath = path.resolve(__dirname, "hello2.txt");
+const data = "This is my text.";
+fs.appendFile(filePath, data, (err) => {
+  if (err) throw err;
+
+  console.log("Updated!");
+});
+```
+
+- `fs.writeFile()` - replaces the specified file and content
+
+```js
+const fs = require("fs");
+const path = require("path");
+
+const filePath = path.resolve(__dirname, "hello2.txt");
+const data = "This is my text.";
+
+fs.writeFile(filePath, data, function (err) {
+  if (err) throw err;
+
+  console.log("Replaced!");
+});
+```
+
+#### Delete files
+
+- `fs.unlink()` - deletes the specified file
+
+```js
+const fs = require("fs");
+const path = require("path");
+
+const filePath = path.resolve(__dirname, "hello2.txt");
+
+fs.unlink(filePath, (err) => {
+  if (err) throw err;
+
+  console.log("File deleted!");
+});
+```
+
+#### Rename files
+
+- `fs.rename()` - renames the specified file
+
+```js
+const fs = require("fs");
+const path = require("path");
+
+const oldPath = path.resolve(__dirname, "hello2.txt");
+const newPath = path.resolve(__dirname, "hello.txt");
+
+fs.rename(oldPath, newPath, (err) => {
+  if (err) throw err;
+
+  console.log("File Renamed!");
+});
+```
+
 </details>
 
 4. **HTTP**
@@ -407,6 +569,31 @@ http
 ```
 
 The function passed into the http.createServer() method, will be executed when someone tries to access the computer on port 8080 (e.g. http://localhost:5000).
+
+</details>
+
+5. Events
+
+<details>
+<summary>View contents</summary>
+
+> create-, fire-, and listen for- your own events
+
+```js
+const events = require("events");
+const eventEmitter = new events.EventEmitter();
+
+//Create an event handler:
+const myEventHandler = function () {
+  console.log("I hear a scream!");
+};
+
+//Assign the event handler to an event:
+eventEmitter.on("scream", myEventHandler);
+
+//Fire the 'scream' event:
+eventEmitter.emit("scream");
+```
 
 </details>
 
